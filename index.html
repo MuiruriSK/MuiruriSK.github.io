@@ -1,7 +1,827 @@
----
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-layout: home
-author_profile: true
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solomon Muiruri | Cybersecurity & Software Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --card: #151f30;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: rgba(0, 212, 255, 0.15);
+      --glow: rgba(0, 212, 255, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID NOISE BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-inner { max-width: 900px; }
+
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+      display: block;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name span {
+      display: block;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--muted);
+      margin: 1.5rem 0 2.5rem;
+      max-width: 560px;
+      font-weight: 400;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+    }
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,212,255,0.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: var(--glow);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,212,255,0.12), transparent 70%);
+      top: -100px; right: -100px;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+      bottom: 0; left: 30%;
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--border); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text { font-size: 1.05rem; color: #94a3b8; line-height: 1.85; }
+    .about-text p { margin-bottom: 1.2rem; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .stat-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ── SKILLS ── */
+    #skills { border-top: 1px solid var(--border); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,255,0.04);
+      transform: translateY(-4px);
+    }
+
+    .skill-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-category {
+      font-size: 0.7rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 3px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--border); }
+
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      transition: all 0.25s;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      background: rgba(0,212,255,0.03);
+      transform: translateX(4px);
+    }
+
+    .project-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.5rem;
+      color: rgba(0,212,255,0.15);
+      font-weight: 700;
+      line-height: 1;
+      min-width: 50px;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .project-highlights {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    .project-highlights li {
+      font-size: 0.85rem;
+      color: #64748b;
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .project-highlights li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent3);
+    }
+
+    .project-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 20px;
+      color: var(--accent3);
+      white-space: nowrap;
+      height: fit-content;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { border-top: 1px solid var(--border); }
+
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+      border-radius: 0 0 0 8px;
+    }
+
+    .exp-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem; }
+
+    .exp-role { font-size: 1.3rem; font-weight: 700; }
+    .exp-company { color: var(--accent); font-size: 1rem; margin-top: 0.25rem; }
+    .exp-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0.4rem 0.9rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .exp-points { list-style: none; }
+    .exp-points li {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      padding: 0.4rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .exp-points li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ── EDUCATION ── */
+    #education { border-top: 1px solid var(--border); }
+
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.25s;
+    }
+    .edu-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+
+    .edu-degree { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .edu-school { color: var(--accent2); font-size: 0.9rem; }
+    .edu-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); text-align: center; }
+
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+
+    .contact-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 1rem;
+    }
+
+    .contact-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      transition: all 0.25s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,212,255,0.15);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-num { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">SK_MuiruriSK</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">Available for opportunities</div>
+      <h1 class="hero-name">
+        Solomon<br>
+        <span>Muiruri</span>
+      </h1>
+      <p class="hero-subtitle">
+        Computer Science graduate specialising in Cybersecurity, Networking & Software Development — building secure, efficient systems from Nairobi, Kenya.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#projects">View Projects</a>
+        <a class="btn btn-ghost" href="mailto:muirurisolomon602@gmail.com">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — About</div>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <p>
+          I'm a Certified Computer Science graduate from Murang'a University of Technology with hands-on experience in networking, cybersecurity, and software development.
+        </p>
+        <p>
+          I'm skilled in Python programming, LAN/WAN configuration, and IT troubleshooting — committed to leveraging technology to solve complex problems and deliver efficient, secure solutions.
+        </p>
+        <p>
+          My passion lies at the intersection of security and software: understanding how systems work, and how to make them work better — and safely.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Personal Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">BSc</div>
+          <div class="stat-label">Computer Science</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Year Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Core Tech Skills</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">02 — Skills</div>
+    <h2 class="section-title">Technical Arsenal</h2>
+    <div class="skills-grid fade-in">
+      <div class="skill-card">
+        <div class="skill-icon">🛡️</div>
+        <div class="skill-category">Security</div>
+        <div class="skill-name">Cybersecurity</div>
+        <div class="skill-tags">
+          <span class="tag">Ethical Hacking</span>
+          <span class="tag">IS Security</span>
+          <span class="tag">Wireshark</span>
+          <span class="tag">Intrusion Detection</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-category">Infrastructure</div>
+        <div class="skill-name">Networking</div>
+        <div class="skill-tags">
+          <span class="tag">LAN/WAN</span>
+          <span class="tag">TCP/IP</span>
+          <span class="tag">Routing</span>
+          <span class="tag">PoE</span>
+          <span class="tag">PABX</span>
+          <span class="tag">Port Forwarding</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-category">Programming</div>
+        <div class="skill-name">Software Dev</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Flask</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔧</div>
+        <div class="skill-category">Tools</div>
+        <div class="skill-name">Dev Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Cisco Packet Tracer</span>
+          <span class="tag">Git</span>
+          <span class="tag">Scapy</span>
+          <span class="tag">Wireshark</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">03 — Projects</div>
+    <h2 class="section-title">What I've Built</h2>
+    <div class="projects-list fade-in">
+
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div>
+          <div class="project-title">Network Intrusion Detection System (NIDS)</div>
+          <div class="project-desc">Real-time intrusion detection for Windows environments — monitors traffic, detects threats, and triggers automated responses.</div>
+          <ul class="project-highlights">
+            <li>Integrated Windows Firewall & Event Logging for immediate IP blocking</li>
+            <li>Web-based dashboard for real-time threat visualization & packet stats</li>
+            <li>Configurable rule-based detection: SYN floods, port scans, DNS amplification</li>
+          </ul>
+          <div class="project-stack">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">Scapy</span>
+            <span class="tag">Windows Firewall API</span>
+          </div>
+        </div>
+        <div class="project-badge">Security</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div>
+          <div class="project-title">Basic Network Sniffer</div>
+          <div class="project-desc">Python-based packet capture tool for real-time monitoring and analysis across TCP, UDP, ICMP, ARP, and DNS protocols.</div>
+          <ul class="project-highlights">
+            <li>BPF filtering, payload inspection & protocol statistics</li>
+            <li>Cross-platform support: Windows, Linux, macOS</li>
+            <li>Color-coded terminal output for intuitive diagnostics</li>
+          </ul>
+          <div class="project-stack">
+            <span class="tag">Python</span>
+            <span class="tag">Scapy</span>
+            <span class="tag">Packet Analysis</span>
+          </div>
+        </div>
+        <div class="project-badge">Networking</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div>
+          <div class="project-title">Phishing Awareness Training Module</div>
+          <div class="project-desc">Interactive training platform educating users on identifying phishing emails and fraudulent websites through real-world simulations.</div>
+          <ul class="project-highlights">
+            <li>Visual examples, quizzes, and real-world phishing case studies</li>
+            <li>Covers social engineering tactics and preventive measures</li>
+            <li>Aimed at improving organisational security culture</li>
+          </ul>
+          <div class="project-stack">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Security Education</span>
+          </div>
+        </div>
+        <div class="project-badge">Education</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">04 — Experience</div>
+    <h2 class="section-title">Where I've Worked</h2>
+    <div class="fade-in">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">IT Attachee</div>
+            <div class="exp-company">Kenya Meteorological Department</div>
+          </div>
+          <div class="exp-period">May 2024 — Jul 2024</div>
+        </div>
+        <ul class="exp-points">
+          <li>Contributed to the development of a Student Information Management System (SIMS)</li>
+          <li>Assisted in LAN/WAN setup, internet troubleshooting, and network maintenance</li>
+          <li>Worked with structured cabling, PABX, aerials, and microwave links</li>
+          <li>Applied knowledge of IS Security, TCP/IP, and routing protocols in a live environment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">05 — Education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="edu-grid fade-in">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">Bachelor of Science in Computer Science</div>
+        <div class="edu-school">Murang'a University of Technology</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📚</div>
+        <div class="edu-degree">Kenya Certificate of Secondary Education (KCSE)</div>
+        <div class="edu-school">St. Anthony's Boys High School, Kitale</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner fade-in">
+      <div class="section-label" style="justify-content:center">06 — Contact</div>
+      <h2 class="contact-title">Let's <span>Connect</span></h2>
+      <p class="contact-sub">Open to internships, junior roles, freelance security projects, and collaboration. Reach out anytime.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:muirurisolomon602@gmail.com">
+          <span>✉</span> muirurisolomon602@gmail.com
+        </a>
+        <a class="contact-link" href="https://github.com/MuiruriSK" target="_blank" rel="noopener">
+          <span>⌥</span> github.com/MuiruriSK
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/solomonmuiruri" target="_blank" rel="noopener">
+          <span>in</span> linkedin.com/in/solomonmuiruri
+        </a>
+        <a class="contact-link" href="tel:+254111257101">
+          <span>☎</span> +254 111 257 101
+        </a>
+      </div>
+      <a class="btn btn-primary" href="mailto:muirurisolomon602@gmail.com">Say Hello →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Designed & built by Solomon Kinyanjui Muiruri · 2025</p>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
