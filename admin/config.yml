@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: MuiruriSK/MuiruriSK.github.io
+  branch: master
+
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio"
+    files:
+      - label: "Home & About"
+        name: "home"
+        file: "cms/home.json"
+        fields:
+          - { label: "Full Name", name: "name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "About Paragraph 1", name: "about1", widget: "text" }
+          - { label: "About Paragraph 2", name: "about2", widget: "text" }
+          - { label: "About Paragraph 3", name: "about3", widget: "text" }
+
+      - label: "Projects"
+        name: "projects"
+        file: "cms/projects.json"
+        fields:
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Category Badge", name: "badge", widget: "string" }
+              - label: "Highlights"
+                name: "highlights"
+                widget: "list"
+                field: { label: "Point", name: "point", widget: "string" }
+              - label: "Tech Stack"
+                name: "stack"
+                widget: "list"
+                field: { label: "Tag", name: "tag", widget: "string" }
+
+      - label: "Lab Challenges"
+        name: "labs"
+        file: "cms/labs.json"
+        fields:
+          - label: "Challenges"
+            name: "challenges"
+            widget: "list"
+            fields:
+              - { label: "Day & Title", name: "title", widget: "string" }
+              - { label: "Platform / Category", name: "platform", widget: "string" }
+              - { label: "Problem Statement", name: "problem", widget: "text" }
+              - { label: "Approach", name: "approach", widget: "text" }
+              - label: "Tools Used"
+                name: "tools"
+                widget: "list"
+                field: { label: "Tool", name: "tool", widget: "string" }
+              - { label: "Key Lessons Learned", name: "lessons", widget: "text" }
+
+      - label: "Certifications"
+        name: "certs"
+        file: "cms/certs.json"
+        fields:
+          - label: "Certifications"
+            name: "certs"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Issuer", name: "issuer", widget: "string" }
+              - { label: "Date", name: "date", widget: "string" }
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+
+      - label: "Contact"
+        name: "contact"
+        file: "cms/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "GitHub URL", name: "github", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
